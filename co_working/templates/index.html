@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>THIS IS INDEX</h1>
+{% for member in members %}
+<p>{{ member.member_first_name }}</p>
+{% endfor %}
+{% endblock content %}
+
+{% block check_in %}
+<div class="card" style="width: 18rem;">
+    <!-- {% load static %}<img class="card-img-top" src="{% static "images/co-working1.jpg" %}" alt="Card image cap"> -->
+    <div class="card-body">
+        <h5 class="card-title">Check-in</h5>
+        <p class="card-text"></p>
+    </div>
+    <form action="{% url 'check_in' %}" method="post">
+        {% csrf_token %}
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <div class="form-group">
+                    <label for="">Member-name:</label>
+                    <input type="text" class="form-control ml-3" id="member_name" name="member_name"
+                        value="{{member_name}}">
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div class="form-group">
+                    <label for="zone_id">Zone:</label>
+                    <select class="form-control" id="zone_id" name="zone_id" required>
+                        <option value="">Select Zone</option>
+                        {% for zone in zones %}
+                        <option value='{{zone.id}}' {% if seat_booking.zone.id == zone.id %}selected{% endif %}>
+                            {{zone.zone.title}} ({{zone.price}}/คน/ชั่วโมง)</option>
+                        {% endfor %}
+                    </select>
+                    <!-- <input type="" class="form-control ml-3" id="choosed_zone" name="choosed_zone"
+                        value="{{choosed_zone}}" placeholder="Select Zone"> -->
+                </div>
+            </li>
+            <li class="list-group-item">
+                <button type="submit" class="btn btn-primary ml-3">Check-in</button>
+            </li>
+        </ul>
+    </form>
+</div>
+
+{% endblock check_in %}
+
+{% block check_out %}
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+        <h5 class="card-title">Check-out</h5>
+        <p class="card-text"></p>
+        <form action="{% url 'check_out' %}" method="post">
+            {% csrf_token %}
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <div class="form-group">
+                        <label for="">Member-name:</label>
+                        <input type="text" class="form-control ml-3" id="member_name" name="member_name"
+                            value="{{member_name}}">
+                    </div>
+                </li>
+                <!-- <li class="list-group-item">
+                    <div class="form-group">
+                        <label for="">Balance:</label>
+                        <input type="text" class="form-control ml-3" id="balance" name="balance" value="{{balance}}"
+                            disabled placeholder="Total Balance">
+                    </div>
+                </li> -->
+                <li class="list-group-item">
+                    <button type="submit" class="btn btn-primary ml-3">Check-out</button>
+                </li>
+            </ul>
+        </form>
+    </div>
+</div>
+{% endblock check_out %}
+
+{% block search_member %}
+<h1>THIS IS search</h1>
+{% endblock search_member %}
+
+{% block check_in_out_log %}
+<h1>THIS IS log</h1>
+{% endblock check_in_out_log %}
